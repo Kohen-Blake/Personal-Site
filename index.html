@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kohen Blake – Portfolio</title>
+  <meta name="description" content="Kohen Blake – developer portfolio and contact." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===============================
+       THEME TOKENS
+       =============================== */
+    :root{
+      --bg:#0b0b0c;
+      --elev:#121214;
+      --muted:#2a2a2e;
+      --text:#e6e6e7;
+      --sub:#a1a1a7;
+      --accent:#9C27B0;
+      --accent-ink:#0b0b0c;
+      --dot:#43A047;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+      --radius-lg:26px;
+      --max:1120px;
+    }
+
+    /* ===============================
+       BASE / UTILS
+       =============================== */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.6; overflow-x:hidden;
+    }
+    a{color:inherit}
+    .container{max-width:var(--max); margin-inline:auto; padding:0 20px}
+    .btn{display:inline-flex; align-items:center; gap:.6rem; padding:.9rem 1.2rem; border-radius:999px; font-weight:600; text-decoration:none; border:1px solid var(--muted); background:var(--elev)}
+    .btn:hover{filter:brightness(1.07)}
+    .btn.primary{background:var(--accent); color:var(--accent-ink); border-color:transparent}
+    .chip{display:inline-flex; align-items:center; gap:.5rem; padding:.4rem .7rem; border-radius:999px; border:1px solid var(--muted); background:rgba(255,255,255,.02); font-size:.8rem; color:var(--sub); font-weight:700; letter-spacing:.06em}
+    .chip .dot{width:.5rem; height:.5rem; border-radius:999px; background:var(--dot)}
+    .pill{background:var(--elev); border:1px solid var(--muted); padding:.65rem .8rem; border-radius:12px; font-size:.92rem}
+
+    .card{border-radius:var(--radius-lg); background:rgba(255,255,255,.02); border:1px solid var(--muted); padding:18px; box-shadow:var(--shadow)}
+    .preview{aspect-ratio:4/3; border-radius:16px; border:1px solid var(--muted); display:grid; place-items:center; color:#6c6c72; background:radial-gradient(600px 200px at 20% 10%, rgba(0,108,67,.2), transparent), linear-gradient(180deg,#0f0f10, #0b0b0c)}
+
+    .grid{display:grid; gap:28px}
+    .skill-emoji {font-size:1.8rem; line-height:1; display:inline-block}
+
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+    .hp{position:absolute; left:-9999px}
+
+    /* ===============================
+       NAV
+       =============================== */
+    header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(120%) blur(8px); background:rgba(11,11,12,.45); border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+    .brand{display:flex; align-items:center; gap:.7rem}
+    .logo{inline-size:34px; block-size:34px; border-radius:10px; display:grid; place-items:center; font-weight:900; background:var(--accent); color:var(--accent-ink)}
+    nav ul{display:flex; gap:.25rem; list-style:none; margin:0; padding:0}
+    nav a{display:inline-block; padding:.6rem .9rem; border-radius:999px; color:var(--text); text-decoration:none; border:1px solid transparent}
+    nav a.active, nav a:hover{background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.08)}
+
+    /* ===============================
+       HERO
+       =============================== */
+    .hero{position:relative; padding:72px 0 64px}
+    @media(min-width:900px){.grid.two{grid-template-columns:1.1fr .9fr}}
+    .hero h1{font-size:clamp(2rem, 4vw + 1rem, 3.5rem); line-height:1.05; margin:12px 0 0; font-weight:900}
+    .hero p{color:var(--sub); font-size:1.05rem; max-width:60ch}
+
+    /* ===============================
+       SECTIONS / COMMON
+       =============================== */
+    section{padding:72px 0}
+    .section-head{display:flex; align-items:end; gap:26px}
+    .section-head h2{margin:6px 0 0; font-weight:900; font-size:clamp(1.6rem, 1.2rem + 1.8vw, 2.4rem)}
+    .section-head p{margin:6px 0 0; color:var(--sub)}
+    .hr{height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent); border-radius:999px; flex:1}
+
+    /* ===============================
+       WORK
+       =============================== */
+    .work{display:grid; gap:16px}
+    @media(min-width:860px){ .work{grid-template-columns:1fr 1fr} }
+    .work .card:hover{transform:translateY(-2px)}
+    .work .meta{display:flex; align-items:center; justify-content:space-between; gap:8px}
+    .tags{display:flex; flex-wrap:wrap; gap:8px}
+    .tag{font-size:.8rem; color:var(--sub); border:1px solid var(--muted); background:#0f0f10; padding:.25rem .6rem; border-radius:999px}
+
+    /* ===============================
+       ABOUT
+       =============================== */
+    .about-grid{display:grid; gap:20px}
+    @media(min-width:860px){.about-grid{grid-template-columns:1fr 1fr}}
+    .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:14px}
+    .stat{padding:14px; border-radius:14px; background:var(--elev); border:1px solid var(--muted); text-align:center}
+    .stat b{display:block; font-size:1.2rem; color:var(--accent)}
+
+    /* ===============================
+       SKILLS
+       =============================== */
+    .skills-split{display:grid; gap:20px}
+    @media(min-width:960px){ .skills-split{grid-template-columns:1.4fr .9fr;} }
+    .Skills{display:grid; gap:16px; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));}
+    .skill-groups{display:grid; gap:16px}
+    .skill-group{border:1px solid var(--muted); background:var(--elev); border-radius:12px; padding:12px}
+    .skill-group h4{margin:0 0 8px; font-size:0.95rem; color:var(--text); letter-spacing:.02em}
+    .skill-pills{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px}
+    @media (min-width:1000px){ .skill-pills{ grid-template-columns:repeat(2, minmax(0,1fr)); } }
+
+    /* ===============================
+       FORMS
+       =============================== */
+    form .row{display:grid; gap:12px}
+    .field label{display:block; font-size:.9rem; color:var(--sub)}
+    .field input,.field textarea{width:100%; background:#0f0f10; border:1px solid var(--muted); color:var(--text); border-radius:12px; padding:.9rem 1rem; font:inherit}
+    .field textarea{resize:vertical}
+    .notice{margin-top:.5rem; color:var(--sub)}
+
+    /* ===============================
+       FOOTER
+       =============================== */
+    footer{border-top:1px solid rgba(255,255,255,.08); color:#a5a5ac}
+    footer .row{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; padding:24px 0}
+
+    /* ===============================
+       DECOR
+       =============================== */
+    .blobs{position:fixed; inset:0; pointer-events:none; z-index:-1}
+    .blob{position:absolute; filter:blur(80px); opacity:.18; background:var(--accent); border-radius:50%}
+    .blob.b1{width:520px; height:520px; left:-180px; top:-160px}
+    .blob.b2{width:360px; height:360px; right:-140px; top:40%}
+    .blob.b3{width:280px; height:280px; left:45%; bottom:-160px}
+
+    .hide-sm{display:none}
+    @media(min-width:820px){.hide-sm{display:block}}
+  </style>
+</head>
+<body>
+  <!-- Decorative Background -->
+  <div class="blobs" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+
+  <!-- NAV -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">K</div>
+        <strong>Kohen Blake</strong>
+      </div>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#home" data-link>Home</a></li>
+          <li><a href="#work" data-link>Work</a></li>
+          <li><a href="#about" data-link>About</a></li>
+          <li><a href="#Skills" data-link>Skills</a></li>
+          <li class="hide-sm"><a href="#contact" class="btn primary" data-link>Contact Me</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="container grid two">
+      <div>
+        <span class="chip"><span class="dot"></span> AVAILABLE FOR WORK</span>
+        <h1>Kohen Blake</h1>
+        <h2>Computer Science Student</h2>
+        <p>A Computer Science student with a focus on cybersecurity, currently attending the University of Alabama.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
+          <a class="btn primary" href="#work" data-link>See my work</a>
+          <a class="btn" href="#contact" data-link>Contact Me</a>
+          <a class="btn" href="MyResume.pdf">Résumé</a> <!-- Add this later when happy with it -->
+        </div>
+        <div style="display:flex; gap:10px; margin-top:14px">
+          <a class="btn" aria-label="GitHub" href="https://github.com/Kohen-Blake" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="btn" aria-label="LinkedIn" href="https://www.linkedin.com/in/kohen-blake-15a636379/" target="_blank" rel="noreferrer">LinkedIn</a>
+        </div>
+      </div>
+      <div></div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="chip"><span class="dot"></span> SECTION 01</div>
+          <h2>Projects</h2>
+          <p>Shipped projects, experiments, and ideas.</p>
+        </div>
+        <div class="hr hide-sm"></div>
+      </div>
+      <div class="work" id="work-grid" style="margin-top:20px"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="chip"><span class="dot"></span> SECTION 02</div>
+          <h2>About</h2>
+          <p>A quick intro & philosophy.</p>
+        </div>
+        <div class="hr hide-sm"></div>
+      </div>
+
+      <div class="about-grid" style="margin-top:16px">
+        <!-- Portrait + stats card -->
+        <div style="justify-self:end; width:100%; max-width:520px">
+          <div class="card">
+            <div class="preview" aria-label="Portrait placeholder">PORTRAIT / ILLUSTRATION</div>
+            <div class="stats">
+              <div class="stat"><b>3</b><span>Years Coding</span></div>
+              <div class="stat"><b>2</b><span>Public Projects</span></div>
+              <div class="stat"><b>0</b><span>Certificates</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- About text -->
+        <div style="color:var(--sub)">
+          <p>I’m a first-year Computer Science student at the University of Alabama with a concentration in cybersecurity. I enjoy turning ideas into secure, working software that people can easily use.</p>
+          <p>I’m an active member of Crimson Defense (UA’s cybersecurity club), where I practice both defense and offense in sanctioned environments. I also keep a homelab for networking experiments and deployment practice, and I ship real-world tools while documenting what I learn.</p>
+          <p>When I’m not behind a keyboard, you’ll find me on my motorcycle, practicing my saxophone, or in a game session with friends. If I sound like someone that you would like to work with please feel free to contact me.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="Skills">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="chip"><span class="dot"></span> SECTION 03</div>
+          <h2>Skills</h2>
+          <p>How I can help.</p>
+        </div>
+        <div class="hr hide-sm"></div>
+      </div>
+
+      <div class="skills-split" style="margin-top:16px">
+        <!-- LEFT: Skills cards -->
+        <div>
+          <div class="Skills" id="Skills-grid"></div>
+        </div>
+
+        <!-- RIGHT: Grouped Other Skills -->
+        <div>
+          <h3 style="margin:0 0 8px">Extra Skills</h3>
+          <div id="skills-groups" class="skill-groups" style="margin-bottom:14px"></div>
+
+          <div class="card">
+            <small style="color:var(--sub)">Currently exploring:</small>
+            <div><strong>Defensive cybersecurity techniques</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="chip"><span class="dot"></span> SECTION 04</div>
+          <h2>Contact</h2>
+          <p>Fill out the form below to get in touch.</p>
+        </div>
+        <div class="hr hide-sm"></div>
+      </div>
+
+      <div class="k-v" style="margin-top:16px">
+        <!-- Contact form card -->
+        <form class="card" id="contact-form" novalidate>
+          <label class="sr-only" for="company">Company</label>
+          <input id="company" name="company" class="hp" type="text" autocomplete="off" tabindex="-1" aria-hidden="true">
+
+          <div class="row">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" placeholder="First Last" required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@domain.com" required>
+            </div>
+            <div class="field">
+              <label for="details">Comments</label>
+              <textarea id="details" name="details" rows="5" placeholder="Anything else?"></textarea>
+            </div>
+
+            <button class="btn primary" id="submit-btn" type="submit">Send message</button>
+            <small id="form-status" class="notice" role="status" aria-live="polite"></small>
+          </div>
+        </form>
+
+        <!-- Contact cards -->
+        <div class="row" style="gap:16px">
+          <div class="card">
+            <h4>Email</h4>
+            <a style="color:var(--sub)" href="mailto:kohenkblake@gmail.com">kohenkblake@gmail.com</a>
+          </div>
+          <div class="card">
+            <h4>Location</h4>
+            <div style="color:var(--sub)">Birmingham, AL • Open to remote</div>
+          </div>
+          <div class="card">
+            <h4>Social</h4>
+            <div style="display:flex; gap:10px; margin-top:8px">
+              <a class="btn" href="https://github.com/Kohen-Blake" target="_blank" rel="noreferrer">GitHub</a>
+              <a class="btn" href="https://www.linkedin.com/in/kohen-blake-15a636379/" target="_blank" rel="noreferrer">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container row">
+      <div>© <span id="y"></span> Kohen Blake. All rights reserved.</div>
+      <div>Built with ♥ — last updated <span id="d"></span></div>
+    </div>
+  </footer>
+
+<script>
+  /* =======================================
+     I know this is unsecure but I will fix it eventually
+     Do NOT use this method for sensitive or high-traffic sites
+     Please
+     I swear I will fix it eventually
+     (Maybe)
+     Also a bit of this was written by ChatGPT due to my limited JS knowledge
+     ======================================= */
+  const DISCORD_WEBHOOK = "https://discordapp.com/api/webhooks/1421707212190912634/VL_y0iG_uHesidEteRpureqopCFooXkpkW1pCZoWo6c5FVNrS8JRzEOVUgHQXjkJQARb";
+
+  /* =======================================
+     CONTENT DATA
+     (projects, grouped skills, cards)
+     ======================================= */
+  const projects = [
+    {title:"Project Homegrown", year:"2025", desc:"A socially driven lawn-care platform with scheduling, maps, and sponsor tiers.", tags:["Vanilla JS","HTML","CSS"], preview:"Preview", href:"#"},
+    {title:"Project 2", year:"Year", desc:"Temp Filler Description", tags:["Tag1","Tag2","Tag3"], preview:"Preview", href:"#"},
+    {title:"Project 3", year:"Year", desc:"Temp Filler Description", tags:["Tag1","Tag2","Tag3"], preview:"Preview", href:"#"},
+    {title:"Project 4", year:"Year", desc:"Temp Filler Description", tags:["Tag1","Tag2","Tag3"], preview:"Preview", href:"#"},
+  ];
+
+  const skillsByCategory = {
+    "Languages": ["HTML / CSS","Basic JavaScript","Python","Basic C++"],
+    "IDEs": ["Visual Studio Code"],
+    "Platforms / Tools": ["Linux CLI (Kali, Mint, Debian)","Virtualization","Basic Docker","Git / GitHub"],
+    "Other": ["Script Automation (Python, Bash, AutoHotkey)"]
+  };
+
+  const Skills = [
+    {icon:"<span class='skill-emoji'>🔎</span>", title:"Reverse Engineering", desc:"Analyzing compiled programs to understand structure, weaknesses, and bypass obfuscation.", items:["Used IDA for basic disassembly.","Debugged programs using x64dbg.","Studied simple string obfuscation and unpacking them."]},
+    {icon:"<span class='skill-emoji'>⚔️</span>", title:"Offensive Security", desc:"Performing penetration testing and exploitation to uncover vulnerabilities and improve defenses.", items:["Familiar with NMap and network monitoring tools such as Wireshark.","Created simple hacking software such as keyloggers.","Basic knowledge of Metasploit and Kali Linux."]},
+    {icon:"<span class='skill-emoji'>🛠️</span>", title:"Server Management", desc:"Deploying and maintaining secure, reliable servers with a focus on performance and scalability.", items:["Set up and maintained Linux servers.","Deployed and managed real-time application servers.","Created and managed VMs for remote labbing."]},
+  ];
+
+  /* =======================================
+     HELPERS
+     ======================================= */
+  function el(html){
+    const t=document.createElement('template');
+    t.innerHTML=html.trim();
+    return t.content.firstChild;
+  }
+
+  function setStatus(msg, kind="info"){
+    const s = document.getElementById('form-status');
+    if (s) {
+      s.style.color = kind === "error" ? "#ffb3b3" : "var(--sub)";
+      s.textContent = msg;
+    } else {
+      if (kind === "error") console.error(msg);
+      else console.log(msg);
+    }
+  }
+
+  /* =======================================
+     RENDER: Projects grid
+     ======================================= */
+  const workGrid = document.getElementById('work-grid');
+  if (workGrid) {
+    projects.forEach(p=>{
+      workGrid.append(
+        el(`<a class="card" href="${p.href}">
+              <div class="preview">${p.preview}</div>
+              <div class="meta" style="margin-top:10px">
+                <h3 style="margin:0">${p.title}</h3>
+                <span class="tag">${p.year}</span>
+              </div>
+              <p style="color:var(--sub); margin:.4rem 0 .6rem">${p.desc}</p>
+              <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+            </a>`)
+      );
+    });
+  }
+
+  /* =======================================
+     RENDER: Grouped "Extra Skills"
+     ======================================= */
+  const skillsGroupsWrap = document.getElementById('skills-groups');
+  if (skillsGroupsWrap){
+    Object.entries(skillsByCategory).forEach(([groupName, items])=>{
+      const group = el(`
+        <div class="skill-group">
+          <h4>${groupName}</h4>
+          <div class="skill-pills"></div>
+        </div>
+      `);
+      const pills = group.querySelector('.skill-pills');
+      items.forEach(txt => pills.append(el(`<div class="pill">${txt}</div>`)));
+      skillsGroupsWrap.append(group);
+    });
+  }
+
+  /* =======================================
+     RENDER: Main Skills cards
+     ======================================= */
+  const SkillsGrid=document.getElementById('Skills-grid');
+  if (SkillsGrid){
+    Skills.forEach(s=>{
+      SkillsGrid.append(el(`
+        <div class="card">
+          <div style="display:grid; place-items:center; inline-size:40px; block-size:40px; border-radius:12px; background:var(--accent); color:var(--accent-ink); font-weight:800">${s.icon}</div>
+          <h3 style="margin:.6rem 0 0">${s.title}</h3>
+          <p style="color:var(--sub); margin:.4rem 0 0">${s.desc}</p>
+          <ul style="margin:.6rem 0 0; padding-left:1.2rem">${s.items.map(i=>`<li>${i}</li>`).join('')}</ul>
+        </div>`))
+    });
+  }
+
+  /* =======================================
+     UX: Smooth scroll for internal links
+     ======================================= */
+  document.querySelectorAll('[data-link]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const href=a.getAttribute('href');
+      if(href && href.startsWith('#')){
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    })
+  });
+
+  /* =======================================
+     UX: Active section highlighting
+     ======================================= */
+  const navLinks=[...document.querySelectorAll('nav a')];
+  const idMap=navLinks.map(a=>[a, a.getAttribute('href')]).filter(([,h])=>h && h.startsWith('#'));
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = `#${entry.target.id}`;
+        idMap.forEach(([a,h])=> a.classList.toggle('active', h===id));
+      }
+    })
+  }, {threshold:.6});
+  idMap.forEach(([,h])=>{const s=document.querySelector(h); if(s) obs.observe(s)});
+
+  /* =======================================
+     FOOTER stamps
+     ======================================= */
+  const y = document.getElementById('y');
+  if (y) y.textContent=new Date().getFullYear();
+  const d = document.getElementById('d');
+  if (d) d.textContent=new Date().toLocaleDateString();
+
+  /* =======================================
+     CONTACT FORM
+     I know it's unsecure but I will fix it eventually
+     See message at top of script
+     ======================================= */
+  const form = document.getElementById('contact-form');
+  if (form){
+    const submitBtn =
+      document.getElementById('submit-btn') ||
+      form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      setStatus(""); // clear prior status
+
+      const hp = document.getElementById('company');
+      if (hp && hp.value.trim() !== ""){
+        form.reset();
+        setStatus("Thanks! (If you’re human and saw this, please ignore.)");
+        return;
+      }
+
+      // Gather + basic validation
+      const nameEl = document.getElementById('name');
+      const emailEl = document.getElementById('email');
+      const detailsEl = document.getElementById('details');
+
+      const name = (nameEl?.value || "").trim().slice(0, 80);
+      const email = (emailEl?.value || "").trim().slice(0, 120);
+      const details = (detailsEl?.value || "").trim().slice(0, 1500);
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+      if(!name){ setStatus("Please enter your name.", "error"); return; }
+      if(!emailOk){ setStatus("Please enter a valid email.", "error"); return; }
+
+      // Build message for Discord
+      const content =
+        `**Portfolio Contact**\n` +
+        `• Name: ${name}\n` +
+        `• Email: ${email}\n` +
+        (details ? `• Message: ${details}` : `• Message: (none)`);
+
+      // Button state UX
+      const oldText = submitBtn ? submitBtn.textContent : null;
+      if (submitBtn){ submitBtn.disabled = true; submitBtn.textContent = "Sending…"; }
+
+      try{
+        const r = await fetch(DISCORD_WEBHOOK, {
+          method:"POST",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify({
+            content,
+            username: "Portfolio Contact",
+            allowed_mentions: { parse: [] } // prevent @pings
+          })
+        });
+
+        // Returns 204 No Content on success
+        if(!(r.ok || r.status === 204)){
+          const t = await r.text().catch(()=>r.statusText);
+          throw new Error(t || `HTTP ${r.status}`);
+        }
+
+        form.reset();
+        setStatus("Message sent—thank you! I’ll get back to you soon.");
+      }catch(err){
+        setStatus(`Could not send message. ${String(err).slice(0,160)}`, "error");
+      }finally{
+        if (submitBtn){ submitBtn.disabled = false; submitBtn.textContent = oldText; }
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
