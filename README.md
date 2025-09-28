@@ -6,7 +6,7 @@ It showcases my work, skills, and a contact form that allows for easy contacting
 ---
 
 ## 🔗 Live Site
-- **URL:** <>  
+- **URL:** <https://kohen-blake.github.io/Personal-Site/>  
 - **Custom domain (Not Currently Linked):** <kohen-b.me>
 
 ---
